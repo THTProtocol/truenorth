@@ -27,7 +27,7 @@ tokio = { version = "1.43", features = ["full"] }
 # Serialization
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-toml = "0.8"
+toml = "1.1"
 
 # Error handling
 thiserror = "2.0"
@@ -45,28 +45,28 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
 
 # HTTP and networking
-reqwest = { version = "0.12", features = ["json", "stream"] }
+reqwest = { version = "0.13", features = ["json", "stream"] }
 axum = { version = "0.8", features = ["ws", "macros"] }
 tower = { version = "0.5", features = ["full"] }
 tower-http = { version = "0.6", features = ["cors", "trace", "fs"] }
 
 # Database
-rusqlite = { version = "0.32", features = ["bundled"] }
+rusqlite = { version = "0.39", features = ["bundled"] }
 
 # Search
-tantivy = "0.22"
+tantivy = "0.26"
 
 # WASM sandbox
-wasmtime = "28.0"
+wasmtime = "43.0"
 
 # CLI
 clap = { version = "4.5", features = ["derive"] }
 
 # File watching
-notify = "7.0"
+notify = "8.2"
 
 # JSON Schema
-schemars = "0.8"
+schemars = "1.2"
 
 # Futures and streams
 futures = "0.3"
@@ -75,7 +75,7 @@ pin-project-lite = "0.2"
 
 # Concurrency utilities
 parking_lot = "0.12"
-rand = "0.8"
+rand = "0.9"
 
 # Testing
 pretty_assertions = "1.4"

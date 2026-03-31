@@ -29,7 +29,7 @@ tantivy = { workspace = true }
 notify = { workspace = true }
 
 # Markdown parsing
-pulldown-cmark = "0.11"
+pulldown-cmark = "0.13"
 serde_yaml = "0.9"
 
 # Utilities
