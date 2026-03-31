@@ -1,0 +1,49 @@
+[package]
+name = "truenorth-orchestrator"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Central orchestrator: wires LLM, memory, tools, skills, and visual into the agent loop"
+
+[dependencies]
+# Internal crates
+truenorth-core = { path = "../truenorth-core" }
+truenorth-llm = { path = "../truenorth-llm" }
+truenorth-memory = { path = "../truenorth-memory" }
+truenorth-tools = { path = "../truenorth-tools" }
+truenorth-skills = { path = "../truenorth-skills" }
+truenorth-visual = { path = "../truenorth-visual" }
+
+# Async runtime
+tokio = { workspace = true, features = ["full"] }
+async-trait.workspace = true
+futures.workspace = true
+tokio-stream.workspace = true
+
+# Serialization
+serde.workspace = true
+serde_json.workspace = true
+
+# Error handling
+thiserror.workspace = true
+anyhow.workspace = true
+
+# Identifiers and time
+uuid.workspace = true
+chrono.workspace = true
+
+# Tracing
+tracing.workspace = true
+
+# Database
+rusqlite.workspace = true
+
+# Concurrency
+parking_lot.workspace = true
+rand.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["full", "test-util"] }
+tempfile.workspace = true
+tokio-test.workspace = true

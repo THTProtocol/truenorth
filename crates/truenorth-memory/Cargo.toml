@@ -1,0 +1,44 @@
+[package]
+name = "truenorth-memory"
+description = "Three-tier memory layer (session, project, identity) with Obsidian sync and semantic search"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+truenorth-core = { path = "../truenorth-core" }
+
+async-trait = { workspace = true }
+tokio = { workspace = true }
+futures = { workspace = true }
+
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+
+# SQLite storage — WAL mode, bundled libsqlite3
+rusqlite = { workspace = true }
+
+# Full-text search index
+tantivy = { workspace = true }
+
+# Filesystem watching for Obsidian sync
+notify = { workspace = true }
+
+# Markdown parsing
+pulldown-cmark = "0.11"
+serde_yaml = "0.9"
+
+# Utilities
+uuid = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }
+parking_lot = "0.12"
+regex = "1.10"
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["full", "test-util"] }
+tempfile = { workspace = true }

@@ -1,0 +1,124 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# TrueNorth Configuration
+# ═══════════════════════════════════════════════════════════════════════════════
+# Copy to config.toml and customize. API keys go in .env, not here.
+
+# ─── LLM Providers ────────────────────────────────────────────────────────────
+
+[llm]
+# Primary provider (first choice for all requests)
+primary_provider = "anthropic"
+
+# Fallback chain (tried in order when primary fails)
+fallback_chain = ["openai", "ollama"]
+
+# Maximum cascade loops before giving up
+max_cascade_loops = 2
+
+# Default generation parameters
+[llm.defaults]
+temperature = 0.7
+max_tokens = 4096
+top_p = 1.0
+
+# Provider-specific configuration
+[llm.providers.anthropic]
+model = "claude-sonnet-4-20250514"
+max_tokens = 8192
+
+[llm.providers.openai]
+model = "gpt-4o"
+max_tokens = 4096
+
+[llm.providers.ollama]
+model = "llama3.1:70b"
+base_url = "http://localhost:11434"
+
+# ─── Memory ───────────────────────────────────────────────────────────────────
+
+[memory]
+# Path to Obsidian-compatible vault
+vault_path = "./vault"
+
+# SQLite database path
+db_path = "./data/truenorth.db"
+
+# Tantivy index path
+index_path = "./data/tantivy"
+
+# Consolidation interval (seconds) — promote session → project memory
+consolidation_interval_secs = 3600
+
+# Embedding model for semantic search
+[memory.embedding]
+provider = "local"  # "local" (fastembed) or "openai"
+model = "all-MiniLM-L6-v2"  # Only used for local provider
+
+# ─── Tools ────────────────────────────────────────────────────────────────────
+
+[tools]
+# WASM fuel limit per tool execution
+wasm_fuel_limit = 1_000_000
+
+# Built-in tools to enable
+enabled_builtins = [
+    "file_read",
+    "file_write",
+    "file_list",
+    "web_search",
+    "web_fetch",
+    "shell_exec",
+    "memory_query",
+    "mermaid_render",
+]
+
+# Shell execution requires explicit approval
+[tools.shell]
+require_approval = true
+allowed_commands = ["ls", "cat", "grep", "find", "wc", "head", "tail"]
+
+# ─── Skills ───────────────────────────────────────────────────────────────────
+
+[skills]
+# Directories to scan for SKILL.md files
+paths = ["./skills/builtin", "./skills/community", "./skills/custom"]
+
+# Auto-install from TrueNorth skill registry
+auto_update = false
+
+# ─── Server ───────────────────────────────────────────────────────────────────
+
+[server]
+host = "127.0.0.1"
+port = 8080
+# Set TRUENORTH_AUTH_TOKEN in .env for authentication
+auth_required = true
+
+# ─── Agent Loop ───────────────────────────────────────────────────────────────
+
+[agent]
+# Maximum steps per task before requiring user confirmation
+max_steps = 50
+
+# Context budget (percentage of model's context window)
+context_budget_threshold = 0.75
+
+# Compaction strategy: "extractive", "sliding_window", or "priority"
+compaction_strategy = "extractive"
+
+# Enable R/C/S for all complex decisions
+rcs_enabled = true
+rcs_complexity_threshold = 4  # Trigger R/C/S for complexity >= 4
+
+# Loop detection
+[agent.loop_guard]
+max_consecutive_similar = 3
+similarity_threshold = 0.9
+wall_clock_timeout_secs = 300
+
+# ─── Logging ──────────────────────────────────────────────────────────────────
+
+[logging]
+level = "info"
+format = "pretty"  # "pretty", "json", or "compact"
+file = "./logs/truenorth.log"  # Optional file output

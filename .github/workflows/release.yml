@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: x86_64-apple-darwin
+            os: macos-latest
+          - target: aarch64-apple-darwin
+            os: macos-latest
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+      - name: Build
+        run: cargo build --release --target ${{ matrix.target }} -p truenorth-cli
+      - name: Package (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          cd target/${{ matrix.target }}/release
+          tar czf ../../../truenorth-${{ matrix.target }}.tar.gz truenorth
+      - name: Package (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          cd target/${{ matrix.target }}/release
+          7z a ../../../truenorth-${{ matrix.target }}.zip truenorth.exe
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: truenorth-${{ matrix.target }}
+          path: truenorth-${{ matrix.target }}.*
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            truenorth-x86_64-unknown-linux-gnu/truenorth-x86_64-unknown-linux-gnu.tar.gz
+            truenorth-x86_64-apple-darwin/truenorth-x86_64-apple-darwin.tar.gz
+            truenorth-aarch64-apple-darwin/truenorth-aarch64-apple-darwin.tar.gz
+            truenorth-x86_64-pc-windows-msvc/truenorth-x86_64-pc-windows-msvc.zip
+          generate_release_notes: true

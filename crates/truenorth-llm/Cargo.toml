@@ -1,0 +1,56 @@
+[package]
+name = "truenorth-llm"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "LLM provider implementations, cascading fallback router, and embedding backends for TrueNorth"
+
+[features]
+default = []
+# Enable local ONNX-based embedding via fastembed (requires ONNX runtime)
+local-embeddings = ["fastembed"]
+
+[dependencies]
+# Internal crate
+truenorth-core = { path = "../truenorth-core" }
+
+# Async runtime
+tokio = { workspace = true, features = ["full"] }
+tokio-stream = "0.1"
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# HTTP client for provider APIs
+reqwest = { workspace = true, features = ["json", "stream"] }
+
+# Async traits
+async-trait = { workspace = true }
+
+# Error handling
+thiserror = { workspace = true }
+
+# Logging and tracing
+tracing = { workspace = true }
+
+# Futures combinators
+futures = "0.3"
+
+# Byte buffer abstraction (used by reqwest streams)
+bytes = "1"
+
+# Identifiers and time
+chrono = { workspace = true }
+uuid = { workspace = true }
+
+# Optional: local embedding via fastembed (ONNX)
+fastembed = { version = "4", optional = true }  # Use latest compatible v4/v5
+
+# Home directory resolution (used by fastembed_provider for model cache)
+dirs = "5"
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["full", "test-util"] }
+tracing-subscriber = { workspace = true }

@@ -1,0 +1,39 @@
+[package]
+name = "truenorth-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Shared types, traits, and error types — the contract layer for all TrueNorth crates"
+
+[dependencies]
+# Async trait support
+async-trait.workspace = true
+tokio = { version = "1", features = ["sync"] }
+futures.workspace = true
+pin-project-lite.workspace = true
+
+# Serialization — every type in core must be Serialize + Deserialize
+serde.workspace = true
+serde_json.workspace = true
+toml.workspace = true
+
+# Error handling
+thiserror.workspace = true
+anyhow.workspace = true
+
+# Identifiers and time
+uuid.workspace = true
+chrono.workspace = true
+
+# Tracing
+tracing.workspace = true
+
+# JSON Schema generation
+schemars.workspace = true
+
+# Markdown frontmatter parsing (for SkillFrontmatter deserialization)
+serde_yaml = "0.9"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["full", "test-util"] }

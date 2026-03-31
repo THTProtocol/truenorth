@@ -1,0 +1,32 @@
+# Build artifacts
+/target/
+**/*.rs.bk
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Data
+/data/
+/vault/
+/logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tantivy index
+*.tantivy/
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal

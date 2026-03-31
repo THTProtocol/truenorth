@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  truenorth:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - truenorth-data:/data/truenorth
+      - ./config.toml:/data/truenorth/config.toml:ro
+    environment:
+      - TRUENORTH_AUTH_TOKEN=${TRUENORTH_AUTH_TOKEN:-}
+      - TRUENORTH_LOG_LEVEL=${TRUENORTH_LOG_LEVEL:-info}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - GOOGLE_AI_API_KEY=${GOOGLE_AI_API_KEY:-}
+    restart: unless-stopped
+
+volumes:
+  truenorth-data:
