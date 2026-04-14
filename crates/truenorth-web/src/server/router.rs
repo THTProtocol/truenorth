@@ -5,9 +5,11 @@
 
 use axum::{
     middleware,
+    response::Html,
     routing::{get, post},
     Router,
 };
+use tower_http::services::ServeDir;
 use tower_http::trace::TraceLayer;
 
 use crate::server::{
@@ -62,13 +64,27 @@ pub fn build_router(state: AppState) -> Router {
             auth_layer,
         ));
 
+    // Serve static dashboard files from the `static/` directory.
+    // Falls back to index.html for SPA client-side routing.
+    let static_service = ServeDir::new("static")
+        .fallback(axum::routing::get(dashboard_fallback));
+
     // Combine public and protected routes, then apply global middleware.
     Router::new()
         .merge(public_routes)
         .merge(api_routes)
+        .fallback_service(static_service)
         .layer(cors_layer())
         .layer(TraceLayer::new_for_http())
         .with_state(state)
+}
+
+/// Fallback handler for SPA routing — serves index.html for any
+/// unmatched path so client-side hash routing works correctly.
+async fn dashboard_fallback() -> Html<&'static str> {
+    // Read the embedded index.html at compile time.
+    // If the file doesn't exist (e.g. no dashboard built), serve a minimal page.
+    Html(include_str!("../../static/index.html"))
 }
 
 #[cfg(test)]
