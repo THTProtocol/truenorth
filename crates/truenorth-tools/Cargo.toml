@@ -15,7 +15,7 @@ voice = []
 truenorth-core = { path = "../truenorth-core" }
 
 # Async runtime
-tokio = { version = "1.43", features = ["full"] }
+tokio = { version = "1.51", features = ["full"] }
 
 # Serialization
 serde = { version = "1.0", features = ["derive"] }
@@ -31,7 +31,7 @@ thiserror = "2.0"
 tracing = "0.1"
 
 # HTTP client
-reqwest = { version = "0.12", features = ["json", "stream"] }
+reqwest = { version = "0.13", features = ["json", "stream"] }
 
 # UUID
 uuid = { version = "1.11", features = ["v4", "serde"] }
@@ -40,12 +40,12 @@ uuid = { version = "1.11", features = ["v4", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
 
 # WASM sandbox
-wasmtime = { version = "28.0", features = ["async", "cranelift"] }
-wasmtime-wasi = { version = "28.0", features = ["preview1"] }
+wasmtime = { version = "43.0", features = ["async", "cranelift"] }
+wasmtime-wasi = { version = "36.0", features = ["preview1"] }
 
 # Byte buffer (used by wasmtime-wasi pipes)
 bytes = "1.0"
 
 [dev-dependencies]
-tokio = { version = "1.43", features = ["full", "test-util"] }
+tokio = { version = "1.51", features = ["full", "test-util"] }
 tempfile = "3.14"
