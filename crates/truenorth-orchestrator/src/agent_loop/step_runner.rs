@@ -61,6 +61,7 @@ impl StepRunner {
         let user_message = self.build_step_prompt(step, context);
 
         let mut tokens_used = 0usize;
+        #[allow(unused_assignments)]
         let mut output_text = String::new();
         let mut tool_calls_made = Vec::new();
 

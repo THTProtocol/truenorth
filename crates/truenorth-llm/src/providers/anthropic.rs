@@ -25,7 +25,7 @@ use tracing::{debug, error, info, warn};
 use truenorth_core::error::LlmError;
 use truenorth_core::traits::llm_provider::{LlmProvider, StreamHandle};
 use truenorth_core::types::llm::{
-    CompletionRequest, CompletionResponse, NormalizedMessage, ProviderCapabilities, StopReason,
+    CompletionRequest, CompletionResponse, ProviderCapabilities, StopReason,
     StreamEvent, TokenUsage,
 };
 use truenorth_core::types::message::{ContentBlock, MessageRole};
@@ -362,7 +362,7 @@ impl LlmProvider for AnthropicProvider {
         stream_request.stream = true;
 
         let body = self.build_request_body(&stream_request);
-        let started = Instant::now();
+        let _started = Instant::now();
 
         debug!(
             model = %self.model,

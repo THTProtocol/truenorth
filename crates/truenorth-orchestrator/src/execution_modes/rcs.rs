@@ -36,8 +36,11 @@ use truenorth_core::types::task::{ExecutionMode, Task};
 /// The phase of the R/C/S loop.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum RcsPhase {
+    /// The Reason phase: produce initial analysis.
     Reason,
+    /// The Critic phase: challenge the reasoning.
     Critic,
+    /// The Synthesis phase: merge reason and criticism.
     Synthesis,
 }
 

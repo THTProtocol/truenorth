@@ -21,7 +21,7 @@
 //! ```
 
 use std::sync::{Arc, Mutex};
-use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
 
 use async_trait::async_trait;
@@ -44,15 +44,27 @@ pub enum MockFailureMode {
     /// No failure — always succeed.
     None,
     /// Return `LlmError::RateLimited` with the given retry-after seconds.
-    RateLimited { retry_after_secs: u64 },
+    /// Simulate a rate limit with retry delay.
+    RateLimited { /// Seconds to wait.
+        retry_after_secs: u64 },
     /// Return `LlmError::ApiKeyExhausted`.
     ApiKeyExhausted,
     /// Return `LlmError::NetworkError` with the given message.
-    NetworkError { message: String },
+    /// Simulate a network error.
+    NetworkError { /// Error message.
+        message: String },
     /// Return `LlmError::ModelRefusal` with the given reason.
-    ModelRefusal { reason: String },
+    /// Simulate a model refusal.
+    ModelRefusal { /// Refusal reason.
+        reason: String },
     /// Return `LlmError::Other` after a specified number of successful calls.
-    FailAfterN { successes_before_fail: u64, error: Box<MockFailureMode> },
+    /// Succeed N times, then fail with the nested error mode.
+    FailAfterN {
+        /// Number of successes before the first failure.
+        successes_before_fail: u64,
+        /// The failure mode to activate after the threshold.
+        error: Box<MockFailureMode>,
+    },
 }
 
 /// A recorded call to the mock provider — useful for assertions in tests.
@@ -357,7 +369,7 @@ impl LlmProvider for MockProvider {
         Ok(response)
     }
 
-    async fn stream(&self, request: &CompletionRequest) -> Result<StreamHandle, LlmError> {
+    async fn stream(&self, _request: &CompletionRequest) -> Result<StreamHandle, LlmError> {
         let latency_ms = {
             let state = self.state.lock().unwrap();
             state.latency_ms
@@ -381,7 +393,7 @@ impl LlmProvider for MockProvider {
             .map(|c| c.iter().collect())
             .collect();
 
-        let chunk_delay = if latency_ms > 0 { latency_ms / (chunks.len().max(1) as u64) } else { 0 };
+        let _chunk_delay = if latency_ms > 0 { latency_ms / (chunks.len().max(1) as u64) } else { 0 };
 
         let mut events: Vec<Result<StreamEvent, LlmError>> = chunks
             .into_iter()

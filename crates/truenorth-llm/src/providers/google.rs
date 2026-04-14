@@ -472,7 +472,7 @@ fn extract_google_error(body: &str) -> String {
     body.chars().take(200).collect()
 }
 
-fn parse_google_sse_event(data: &str, model: &str) -> Option<Result<StreamEvent, LlmError>> {
+fn parse_google_sse_event(data: &str, _model: &str) -> Option<Result<StreamEvent, LlmError>> {
     let v = try_parse_json(data)?;
 
     let candidates = v.get("candidates").and_then(|c| c.as_array())?;

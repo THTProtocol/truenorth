@@ -83,7 +83,7 @@ impl OpenAiProvider {
     }
 
     /// Builds the JSON request body for the OpenAI Chat Completions API.
-    pub(crate) fn build_request_body(&self, request: &CompletionRequest, base_url_override: Option<&str>) -> Value {
+    pub(crate) fn build_request_body(&self, request: &CompletionRequest, _base_url_override: Option<&str>) -> Value {
         let mut messages: Vec<Value> = Vec::new();
 
         for msg in &request.messages {
@@ -453,7 +453,7 @@ impl LlmProvider for OpenAiProvider {
 
 // ─── SSE parsing ─────────────────────────────────────────────────────────────
 
-fn parse_openai_sse_event(data: &str, provider: &str) -> Option<Result<StreamEvent, LlmError>> {
+fn parse_openai_sse_event(data: &str, _provider: &str) -> Option<Result<StreamEvent, LlmError>> {
     let v = try_parse_json(data)?;
 
     let choices = v.get("choices").and_then(|c| c.as_array())?;
@@ -609,7 +609,7 @@ fn build_openai_assistant_message(content: &[ContentBlock]) -> Value {
 fn build_openai_tool_result_message(content: &[ContentBlock]) -> Value {
     // Extract tool_use_id and result text from ToolResult blocks
     for block in content {
-        if let ContentBlock::ToolResult { tool_use_id, content: result_content, is_error } = block {
+        if let ContentBlock::ToolResult { tool_use_id, content: result_content, is_error: _ } = block {
             let text = result_content.iter()
                 .filter_map(|b| match b { ContentBlock::Text { text } => Some(text.as_str()), _ => None })
                 .collect::<Vec<_>>()

@@ -13,6 +13,7 @@ use truenorth_core::traits::execution::ExecutionError;
 use uuid::Uuid;
 
 /// Default similarity threshold for loop detection (90%).
+#[allow(dead_code)]
 const DEFAULT_SIMILARITY_THRESHOLD: f64 = 0.9;
 
 /// Computes cosine similarity between consecutive outputs to detect loops.

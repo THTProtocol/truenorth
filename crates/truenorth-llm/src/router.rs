@@ -46,7 +46,7 @@ use tracing::{debug, error, info, warn};
 use uuid::Uuid;
 
 use truenorth_core::error::LlmError;
-use truenorth_core::traits::llm_provider::{LlmProvider, StreamHandle};
+use truenorth_core::traits::llm_provider::StreamHandle;
 use truenorth_core::traits::llm_router::LlmRouter;
 use truenorth_core::types::llm::{CompletionRequest, CompletionResponse};
 use truenorth_core::types::routing::{
@@ -84,6 +84,7 @@ impl Default for RouterConfig {
 
 /// A record of a single provider attempt within a routing loop.
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 struct ProviderAttempt {
     provider: String,
     loop_number: usize,
@@ -118,6 +119,7 @@ pub struct DefaultLlmRouter {
     /// Per-provider rate limit and availability tracking.
     rate_limiter: Arc<RateLimiter>,
     /// Context serializer for cross-provider handoff.
+    #[allow(dead_code)]
     context_serializer: ContextSerializer,
     /// The most recent routing decision (protected by RwLock for concurrent reads).
     last_decision: Arc<RwLock<Option<RoutingDecision>>>,
@@ -296,7 +298,7 @@ impl DefaultLlmRouter {
             let mut loop_skipped: Vec<SkippedProvider> = Vec::new();
             let mut any_provider_tried = false;
 
-            for (provider_idx, provider) in self.providers.iter().enumerate() {
+            for (_provider_idx, provider) in self.providers.iter().enumerate() {
                 attempt_number += 1;
 
                 // Skip providers that lack required capabilities
@@ -782,7 +784,7 @@ impl LlmRouter for DefaultLlmRouter {
 
     fn mark_provider_unavailable(&self, provider_name: &str, reason: &str) {
         self.rate_limiter.mark_disabled(provider_name, reason);
-        if let Some(provider) = self.providers.iter().find(|p| p.name() == provider_name) {
+        if let Some(_provider) = self.providers.iter().find(|p| p.name() == provider_name) {
             // Use mark_rate_limited with a long duration as a proxy for "disabled"
             // The rate_limiter's mark_disabled handles the real tracking
             warn!(
@@ -795,7 +797,7 @@ impl LlmRouter for DefaultLlmRouter {
 
     fn restore_provider(&self, provider_name: &str) {
         self.rate_limiter.restore(provider_name);
-        if let Some(provider) = self.providers.iter().find(|p| p.name() == provider_name) {
+        if let Some(_provider) = self.providers.iter().find(|p| p.name() == provider_name) {
             info!(
                 provider = provider_name,
                 "Router: restoring provider to active rotation"
@@ -889,7 +891,7 @@ impl DefaultLlmRouterBuilder {
             rate_limiter.register_provider(provider.name());
         }
 
-        let mut router = DefaultLlmRouter {
+        let router = DefaultLlmRouter {
             providers: self.providers,
             config: self.config,
             rate_limiter,

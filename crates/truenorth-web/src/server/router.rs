@@ -5,7 +5,7 @@
 
 use axum::{
     middleware,
-    routing::{delete, get, post},
+    routing::{get, post},
     Router,
 };
 use tower_http::trace::TraceLayer;

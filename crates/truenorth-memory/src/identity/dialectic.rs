@@ -13,10 +13,8 @@
 //!    nudge question to confirm the inference with the user.
 //! 4. **Store**: Confirmed patterns are written to the identity memory store.
 
-use std::collections::HashMap;
 use std::sync::Arc;
 
-use chrono::Utc;
 use tokio::sync::RwLock;
 use tracing::{debug, info};
 
@@ -52,8 +50,10 @@ enum SignalType {
     /// User's messages frequently use bullet lists.
     BulletPointStyle,
     /// User's messages are flowing prose.
+    #[allow(dead_code)]
     ProseStyle,
     /// User mentions or works with a specific domain (key = domain name).
+    #[allow(dead_code)]
     DomainKeyword(String),
     /// User appears to follow test-driven development.
     TddWorkflow,
@@ -78,6 +78,7 @@ pub struct HonchoDialecticModeler {
     /// Accumulator for unprocessed observations.
     observations: Arc<RwLock<Vec<Observation>>>,
     /// Minimum observations required before generating a nudge.
+    #[allow(dead_code)]
     nudge_threshold: u32,
 }
 

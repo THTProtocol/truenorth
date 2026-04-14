@@ -24,13 +24,12 @@ use async_trait::async_trait;
 use futures::StreamExt;
 use reqwest::Client;
 use serde_json::{json, Value};
-use tracing::{debug, error, info, warn};
+use tracing::{debug, info, warn};
 
 use truenorth_core::error::LlmError;
 use truenorth_core::traits::llm_provider::{LlmProvider, StreamHandle};
 use truenorth_core::types::llm::{
     CompletionRequest, CompletionResponse, ProviderCapabilities, StopReason, StreamEvent,
-    TokenUsage,
 };
 use truenorth_core::types::message::MessageRole;
 
@@ -413,7 +412,7 @@ fn derive_provider_name(base_url: &str) -> String {
     }
 }
 
-fn parse_openai_compat_sse_event(data: &str, provider: &str) -> Option<Result<StreamEvent, LlmError>> {
+fn parse_openai_compat_sse_event(data: &str, _provider: &str) -> Option<Result<StreamEvent, LlmError>> {
     use crate::stream::try_parse_json;
 
     let v = try_parse_json(data)?;

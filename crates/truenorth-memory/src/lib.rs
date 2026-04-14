@@ -55,7 +55,6 @@ pub use truenorth_core::types::memory::{
 use std::path::PathBuf;
 use std::sync::Arc;
 
-use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use tokio::sync::RwLock;
 use tracing::{debug, info, instrument};
@@ -121,6 +120,7 @@ impl Default for MemoryLayerConfig {
 pub struct MemoryLayerBuilder {
     config: MemoryLayerConfig,
     embedding_provider: Option<Arc<dyn truenorth_core::traits::embedding_provider::EmbeddingProvider>>,
+    #[allow(dead_code)]
     event_tx: Option<tokio::sync::broadcast::Sender<truenorth_core::types::event::ReasoningEvent>>,
 }
 
@@ -274,6 +274,7 @@ pub struct MemoryLayer {
     /// Root directory of the Obsidian vault.
     vault_dir: PathBuf,
     /// Optional broadcast sender for emitting reasoning events.
+    #[allow(dead_code)]
     event_tx: Option<tokio::sync::broadcast::Sender<truenorth_core::types::event::ReasoningEvent>>,
 }
 

@@ -60,6 +60,7 @@ pub struct AgentLoopExecutor {
     /// Context budget manager.
     budget_manager: Arc<DefaultContextBudgetManager>,
     /// Session manager.
+    #[allow(dead_code)]
     session_manager: Arc<DefaultSessionManager>,
     /// Negative checklist verifier.
     checklist: Arc<DefaultNegativeChecklist>,
@@ -85,7 +86,8 @@ impl AgentLoopExecutor {
         llm_router: Option<Arc<dyn LlmRouter>>,
         event_emitter: Option<Arc<dyn ReasoningEventEmitter>>,
         budget_manager: Arc<DefaultContextBudgetManager>,
-        session_manager: Arc<DefaultSessionManager>,
+        #[allow(dead_code)]
+    session_manager: Arc<DefaultSessionManager>,
         checklist: Arc<DefaultNegativeChecklist>,
         deviation_tracker: Arc<DefaultDeviationTracker>,
         config: OrchestratorConfig,

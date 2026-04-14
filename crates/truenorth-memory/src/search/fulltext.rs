@@ -11,7 +11,6 @@
 //! call site (the `SearchEngine` facade handles this automatically).
 
 use std::path::PathBuf;
-use std::sync::Arc;
 
 use tantivy::collector::TopDocs;
 use tantivy::query::QueryParser;

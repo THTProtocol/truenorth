@@ -268,7 +268,7 @@ impl AutoDreamConsolidator {
         _scope: MemoryScope,
     ) -> (usize, usize) {
         let mut created = 0usize;
-        let mut merged = 0usize;
+        let merged = 0usize;
 
         for signal in signals {
             match signal.target_scope {

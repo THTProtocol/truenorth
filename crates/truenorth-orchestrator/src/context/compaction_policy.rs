@@ -13,19 +13,25 @@ pub enum CompactionStrategy {
     /// Keep only the most recent N messages. Oldest messages are discarded.
     ///
     /// Fast and simple. Appropriate when older context is no longer needed.
-    SlidingWindow { keep_last_n: usize },
+    SlidingWindow { 
+        /// Number of recent messages to keep.
+        keep_last_n: usize },
 
     /// Summarize the oldest K messages using an LLM and replace them with
     /// a single summary block tagged `[Compacted: ...]`.
     ///
     /// Preserves information but requires an LLM call.
-    ExtractiveSummary { summarize_oldest_k: usize },
+    ExtractiveSummary {
+        /// Number of oldest messages to summarize.
+        summarize_oldest_k: usize },
 
     /// Remove messages with the lowest importance scores first.
     ///
     /// Requires messages to have associated importance scores.
     /// Falls back to `SlidingWindow` if no scores are available.
-    PriorityBased { target_utilization: f32 },
+    PriorityBased {
+        /// Target context utilization ratio (0.0–1.0).
+        target_utilization: f32 },
 }
 
 impl Default for CompactionStrategy {

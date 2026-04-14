@@ -461,6 +461,7 @@ fn row_to_entry(row: &rusqlite::Row<'_>) -> rusqlite::Result<MemoryEntry> {
 }
 
 /// Public helper: convert a raw SQLite row to a `MemoryEntry` (used by other modules).
+#[allow(dead_code)]
 pub(crate) fn sqlite_row_to_entry(row: &rusqlite::Row<'_>) -> rusqlite::Result<MemoryEntry> {
     row_to_entry(row)
 }

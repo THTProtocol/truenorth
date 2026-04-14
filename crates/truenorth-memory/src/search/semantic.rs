@@ -15,7 +15,7 @@
 use std::sync::Arc;
 
 use tokio::sync::RwLock;
-use tracing::{debug, warn};
+use tracing::debug;
 use uuid::Uuid;
 
 use truenorth_core::traits::embedding_provider::EmbeddingProvider;

@@ -13,6 +13,7 @@ use truenorth_core::types::task::{ComplexityScore, ExecutionMode, Task};
 use truenorth_core::traits::execution::ExecutionError;
 
 /// Complexity thresholds for strategy selection.
+#[allow(dead_code)]
 const SIMPLE_TASK_THRESHOLD: f32 = 0.35;
 const COMPLEX_TASK_THRESHOLD: f32 = 0.75;
 
@@ -40,6 +41,7 @@ impl TaskPlanner {
     pub fn assess_complexity(&self, task: &Task) -> ComplexityScore {
         let description = &task.description;
         let mut score: f32 = 0.0;
+        #[allow(unused_assignments)]
         let mut estimated_tool_calls = 0usize;
 
         // Check for multi-step indicators

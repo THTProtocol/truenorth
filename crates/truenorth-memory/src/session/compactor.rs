@@ -14,9 +14,7 @@
 //!    available, the compactor falls back to extractive summarization (first sentence
 //!    of each entry).
 
-use std::collections::HashMap;
 
-use chrono::Utc;
 use tracing::{debug, info};
 use uuid::Uuid;
 

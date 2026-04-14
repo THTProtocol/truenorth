@@ -31,7 +31,6 @@ use truenorth_core::error::LlmError;
 use truenorth_core::traits::llm_provider::{LlmProvider, StreamHandle};
 use truenorth_core::types::llm::{
     CompletionRequest, CompletionResponse, ProviderCapabilities, StopReason, StreamEvent,
-    TokenUsage,
 };
 use truenorth_core::types::message::MessageRole;
 

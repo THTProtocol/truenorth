@@ -160,7 +160,7 @@ impl OpenAiEmbedProvider {
 
         // Validate dimensions
         let expected_dims = self.model_info.dimensions;
-        for (i, emb) in embeddings.iter().enumerate() {
+        for (_i, emb) in embeddings.iter().enumerate() {
             if emb.len() != expected_dims {
                 return Err(EmbeddingError::DimensionMismatch {
                     expected: expected_dims,

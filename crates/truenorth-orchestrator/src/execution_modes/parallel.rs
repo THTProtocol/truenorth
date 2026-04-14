@@ -48,6 +48,7 @@ impl ParallelExecutionStrategy {
     }
 
     /// Returns which steps can run immediately given the set of completed step IDs.
+#[allow(dead_code)]
     fn eligible_steps<'a>(
         steps: &'a [PlanStep],
         completed_ids: &std::collections::HashSet<Uuid>,

@@ -43,7 +43,7 @@
 use tracing::{debug, info, warn};
 
 use truenorth_core::types::message::{
-    AgentMessage, ContentBlock, ConversationHistory, MessageContent, MessageRole,
+    AgentMessage, ContentBlock, ConversationHistory, MessageContent,
 };
 
 /// Statistics about fidelity loss during context serialization.
@@ -297,7 +297,7 @@ impl ContextSerializer {
                 }
             }
 
-            ContentBlock::Image { mime_type, data } => {
+            ContentBlock::Image { mime_type, data: _ } => {
                 if target_supports_vision {
                     // Keep image blocks for vision-capable providers
                     vec![block.clone()]
@@ -315,7 +315,7 @@ impl ContextSerializer {
                 }
             }
 
-            ContentBlock::ToolUse { id, name, input } => {
+            ContentBlock::ToolUse { id: _, name: _, input: _ } => {
                 // Tool calls are provider-neutral — preserve exactly.
                 vec![block.clone()]
             }
@@ -342,7 +342,7 @@ impl ContextSerializer {
                 }]
             }
 
-            ContentBlock::Text { text } => {
+            ContentBlock::Text { text: _ } => {
                 // Text blocks are provider-neutral — preserve exactly.
                 // No transformation needed.
                 vec![block.clone()]
