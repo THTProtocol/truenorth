@@ -12,6 +12,8 @@ path = "src/main.rs"
 
 [dependencies]
 truenorth-core = { path = "../truenorth-core" }
+truenorth-orchestrator = { path = "../truenorth-orchestrator" }
+truenorth-web = { path = "../truenorth-web" }
 
 # CLI framework
 clap = { workspace = true }

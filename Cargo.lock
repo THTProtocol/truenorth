@@ -4459,6 +4459,8 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "truenorth-core",
+ "truenorth-orchestrator",
+ "truenorth-web",
  "uuid",
 ]
 
