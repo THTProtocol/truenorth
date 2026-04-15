@@ -42,7 +42,7 @@ jobs:
           cd target/${{ matrix.target }}/release
           7z a ../../../truenorth-${{ matrix.target }}.zip truenorth.exe
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: truenorth-${{ matrix.target }}
           path: truenorth-${{ matrix.target }}.*
