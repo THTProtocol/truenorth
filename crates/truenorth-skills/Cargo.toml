@@ -20,7 +20,7 @@ thiserror = { workspace = true }
 anyhow = { workspace = true }
 
 # HTTP for marketplace/community skill installation
-reqwest = { version = "0.12", features = ["json"] }
+reqwest = { version = "0.13", features = ["json"] }
 
 # Filesystem glob scanning
 glob = "0.3"

@@ -46,10 +46,10 @@ chrono = { workspace = true }
 uuid = { workspace = true }
 
 # Optional: local embedding via fastembed (ONNX)
-fastembed = { version = "4", optional = true }  # Use latest compatible v4/v5
+fastembed = { version = "4", optional = true }  # Use latest compatible v5/v5
 
 # Home directory resolution (used by fastembed_provider for model cache)
-dirs = "5"
+dirs = "6"
 
 [dev-dependencies]
 tokio = { workspace = true, features = ["full", "test-util"] }
